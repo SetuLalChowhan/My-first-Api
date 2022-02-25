@@ -1,8 +1,16 @@
-const {User} = require("../models/dbmodel");
+const User = require("../models/userModel");
+const UserType = require("../models/userType");
 
 async function showAllUser(req, res) {
   try {
-    const allUser = await User.findAll({});
+    const allUser = await User.findAll({
+      include:[
+        {
+          model:UserType,
+          as:"user_type"
+         }
+      ]
+    });
     res.send(allUser);
   } catch (err) {
     console.log(err);
@@ -11,7 +19,7 @@ async function showAllUser(req, res) {
 }
 
 async function registration(req, res) {
-  const { username, email, password, confirm_password } = req.body;
+  const { username, email, password, confirm_password,user_type_id,is_active } = req.body;
   try {
     const existUser = await User.findOne({
       where: {
@@ -26,6 +34,8 @@ async function registration(req, res) {
       username,
       email,
       password,
+      user_type_id,
+      is_active,
     });
 
     res.status(201).send(user);
