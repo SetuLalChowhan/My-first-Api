@@ -17,7 +17,7 @@ const User = sequelize.define("users", {
 });
 // UserType.hasMany(User,{as:"users", foreignKey:"user_type_id"})
 User.belongsTo(UserType,{as:"user_type", foreignKey:"user_type_id"})
-// User.belongsTo(UserType)
+
 
 
 

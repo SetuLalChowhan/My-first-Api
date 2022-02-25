@@ -4,12 +4,12 @@ const UserType = require("../models/userType");
 async function showAllUser(req, res) {
   try {
     const allUser = await User.findAll({
-      include:[
+      include: [
         {
-          model:UserType,
-          as:"user_type"
-         }
-      ]
+          model: UserType,
+          as: "user_type",
+        },
+      ],
     });
     res.send(allUser);
   } catch (err) {
@@ -19,7 +19,14 @@ async function showAllUser(req, res) {
 }
 
 async function registration(req, res) {
-  const { username, email, password, confirm_password,user_type_id,is_active } = req.body;
+  const {
+    username,
+    email,
+    password,
+    confirm_password,
+    user_type_id,
+    is_active,
+  } = req.body;
   try {
     const existUser = await User.findOne({
       where: {

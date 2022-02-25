@@ -7,10 +7,9 @@ const productRouter = require("./routes/products");
 
 app.use(express.json());
 
-app.use('/api/users',userRouter);
-app.use('/api/products',productRouter);
+app.use("/api/users", userRouter);
+app.use("/api/products", productRouter);
 
 app.listen(3000, () => {
   console.log("listening on port 3000");
 });
-
