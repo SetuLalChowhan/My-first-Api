@@ -1,6 +1,34 @@
 const User = require("./userModel");
 const UserType = require("./userTypeModel");
 
+const jwt = require("jsonwebtoken");
+
+async function login(req, res) {
+    const {email, password} = req.body;
+    try {
+        const user = await User.findOne({
+            where: {
+                email,
+            },
+        });
+
+        if (!user || !user.validPassword(password)) return res.status(400).send("Invalid Email and Password");
+
+        const payload = {
+            user_id: user.id,
+            email: user.email,
+        };
+
+        const token = jwt.sign(payload, "setunal", {expiresIn: "2h"});
+
+        user.dataValues.token = token;
+        res.send(user);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
 async function showAllUser(req, res) {
     try {
         const allUser = await User.findAll({
@@ -140,4 +168,5 @@ module.exports = {
     update,
     singleUpdate,
     userDelete,
+    login,
 };

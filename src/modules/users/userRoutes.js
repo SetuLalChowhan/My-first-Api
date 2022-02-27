@@ -5,17 +5,20 @@ const userController = require("./userController");
 const userSchema = require("./userSchema");
 
 const validate = require(path.join(process.cwd(), "src/modules/core/middleware/validate.js"));
+const auth = require(path.join(process.cwd(), "src/modules/core/middleware/verifyToken"));
 
-router.get("", userController.showAllUser);
+router.get("/api/users", auth, userController.showAllUser);
 
-router.get("/:id", userController.searchId);
+router.get("/api/users/:id", userController.searchId);
 
-router.post("", validate(userSchema.registerSchema), userController.registration);
+router.post("/api/users", validate(userSchema.registerSchema), userController.registration);
 
-router.put("/:id", validate(userSchema.updateSchema), userController.update);
+router.put("/api/users/:id", validate(userSchema.updateSchema), userController.update);
 
-router.patch("/:id", validate(userSchema.userSingleUpdate), userController.singleUpdate);
+router.patch("/api/users/:id", validate(userSchema.userSingleUpdate), userController.singleUpdate);
 
-router.delete("/:id", userController.userDelete);
+router.delete("/api/users/:id", userController.userDelete);
+
+router.post("/api/users/login", userController.login);
 
 module.exports = router;

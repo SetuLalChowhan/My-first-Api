@@ -8,16 +8,16 @@ const validate = require(path.join(process.cwd(), "src/modules/core/middleware/v
 
 // const validate = require("../core/middleware/validate");
 
-router.get("", productController.allProduct);
+router.get("/api/products", productController.allProduct);
 
-router.get("/:id", productController.productSearch);
+router.get("/api/products/:id", productController.productSearch);
 
-router.post("", validate(productsSchema.productSchema), productController.productAdd);
+router.post("/api/products", validate(productsSchema.productSchema), productController.productAdd);
 
-router.put("/:id", validate(productsSchema.productSchema), productController.update);
+router.put("/api/products/:id", validate(productsSchema.productSchema), productController.update);
 
-router.patch("/:id", validate(productsSchema.singleProductSchema), productController.singleUpdate);
+router.patch("/api/products/:id", validate(productsSchema.singleProductSchema), productController.singleUpdate);
 
-router.delete("/:id", productController.deleteProduct);
+router.delete("/api/products/:id", productController.deleteProduct);
 
 module.exports = router;
