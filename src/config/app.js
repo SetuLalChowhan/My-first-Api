@@ -7,5 +7,3 @@ const express = require("express");
         console.log("listening on port 3000");
     });
 })();
-
-//add two  number

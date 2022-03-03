@@ -1,6 +1,8 @@
 const User = require("./userModel");
 const UserType = require("./userTypeModel");
 
+const {generateAccessToken} = require("./services/userService");
+
 const jwt = require("jsonwebtoken");
 
 async function login(req, res) {
@@ -14,14 +16,8 @@ async function login(req, res) {
 
         if (!user || !user.validPassword(password)) return res.status(400).send("Invalid Email and Password");
 
-        const payload = {
-            user_id: user.id,
-            email: user.email,
-        };
+        res.cookie("access_token", generateAccessToken(user), {httpOnly: true, sameSite: true, signed: true});
 
-        const token = jwt.sign(payload, "setunal", {expiresIn: "2h"});
-
-        user.dataValues.token = token;
         res.send(user);
     } catch (err) {
         console.log(err);

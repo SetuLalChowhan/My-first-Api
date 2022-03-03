@@ -3,11 +3,13 @@ const router = express.Router();
 const path = require("path");
 const userController = require("./userController");
 const userSchema = require("./userSchema");
+// const {authStrategy} = require("./userAuthMiddleware");
 
 const validate = require(path.join(process.cwd(), "src/modules/core/middleware/validate.js"));
-const auth = require(path.join(process.cwd(), "src/modules/core/middleware/verifyToken"));
+// const auth = require('./userVerify')
+const {authStrategy} = require("./userVerify");
 
-router.get("/api/users", auth, userController.showAllUser);
+router.get("/api/users", authStrategy, userController.showAllUser);
 
 router.get("/api/users/:id", userController.searchId);
 

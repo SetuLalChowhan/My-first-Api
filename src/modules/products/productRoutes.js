@@ -5,8 +5,7 @@ const productController = require("./productController");
 const productsSchema = require("./productSchema");
 
 const validate = require(path.join(process.cwd(), "src/modules/core/middleware/validate.js"));
-
-// const validate = require("../core/middleware/validate");
+const auth = require(path.join(process.cwd(), "src/modules/core/middleware/verifyToken"));
 
 router.get("/api/products", productController.allProduct);
 
